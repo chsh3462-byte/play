@@ -1,8 +1,8 @@
 const catalogue=[
- ["황동 기계실 · 삼연 릴","러키 세븐","황동 프레임 안에서 세 개의 릴이 차례로 멈춥니다. 가운데 줄에 나란히 선 문양을 확인하세요.","같은 문양 둘은 1.5배, 셋은 8배. 세븐 세 개는 30배를 지급합니다."],
- ["회전 살롱 · 상아 구슬","모노 오빗","마호가니 원판 위로 상아빛 구슬이 반대 방향으로 흐릅니다. 칩을 고르고 흑·백 번호판에 올리세요.","색만 맞으면 1.5배, 색과 숫자를 모두 맞히면 2배입니다. 숫자만 맞으면 지급액은 0입니다."],
- ["포커룸 · 헤즈업","하버 홀덤","딜러와 마주 앉아 두 장씩 받습니다. 공용 카드가 열릴 때마다 체크하거나 칩을 더 걸 수 있습니다.","각자의 두 장과 공용 다섯 장으로 최고의 다섯 장을 만듭니다. 무승부면 팟을 반씩 나눕니다."],
- ["카드 살롱 · 트웬티원","블루아워 21","상아색 카드 두 장으로 시작합니다. 한 장을 더 받거나 손을 멈춰 딜러보다 21에 가까이 가세요.","내추럴 블랙잭은 2.5배, 일반 승리는 2배. 동점은 원금을 돌려받습니다."] ];
+ ["릴 3개","슬롯","황동 프레임 안에서 세 개의 릴이 차례로 멈춥니다. 가운데 줄에 나란히 선 문양을 확인하세요.","같은 문양 둘은 1.5배, 셋은 8배. 세븐 세 개는 30배를 지급합니다."],
+ ["흑·백 1~6","룰렛","마호가니 원판 위로 상아빛 구슬이 반대 방향으로 흐릅니다. 칩을 고르고 흑·백 번호판에 올리세요.","색만 맞으면 1.5배, 색과 숫자를 모두 맞히면 2배입니다. 숫자만 맞으면 지급액은 0입니다."],
+ ["딜러와 1대1","홀덤","딜러와 마주 앉아 두 장씩 받습니다. 공용 카드가 열릴 때마다 체크하거나 칩을 더 걸 수 있습니다.","각자의 두 장과 공용 다섯 장으로 최고의 다섯 장을 만듭니다. 무승부면 팟을 반씩 나눕니다."],
+ ["21점","블랙잭","상아색 카드 두 장으로 시작합니다. 한 장을 더 받거나 손을 멈춰 딜러보다 21에 가까이 가세요.","내추럴 블랙잭은 2.5배, 일반 승리는 2배. 동점은 원금을 돌려받습니다."] ];
 function handRow(hand,x,y,hide,t){let spacing=Math.min(58,425/Math.max(1,hand.length));hand.forEach((c,i)=>{let age=Math.max(0,t-(cardTimes.get(c)??-5));let p=reduced?1:1-(1-Math.min(1,age/.28))**3;ctx.globalAlpha=.35+.65*p;card(x+(i-(hand.length-1)/2)*spacing-22+(1-p)*41,y-(1-p)*28,hide(i)?null:c,44,60);ctx.globalAlpha=1})}
 function stage(t){ctx=$("table").getContext("2d");field(640,350);
  if(mode<2){let e=anim?t-anim.start:-1;if(mode===0)cabinet(316,169,2.02,t,reels,reduced?-1:e);
@@ -10,7 +10,7 @@ function stage(t){ctx=$("table").getContext("2d");field(640,350);
  chips(77,286,3,"#394e40");chips(102,292,5);chips(540,285,4);
  }else{
  ellipse(320,182,306,158,"#714b34");ellipse(320,178,303,154,"#c5a269");ellipse(320,177,298,149,"#254a37");ellipse(320,176,281,135,"#8d8960");ellipse(320,176,279,133,"#264936");chips(96,214,3);chips(548,212,5,"#425946");
- if(!player.length){card(264,130,null,50,72,-.18);card(298,124,null,50,72,.07);card(328,126,null,50,72,.2);txt(mode===2?"HARBOR HOLD’EM":"BLUE HOUR 21",320,246,18,ivory)}
+ if(!player.length){card(264,130,null,50,72,-.18);card(298,124,null,50,72,.07);card(328,126,null,50,72,.2);txt(mode===2?"HOLD’EM":"BLACKJACK",320,246,18,ivory)}
  else{let h=mode===2;txt("DEALER",320,41,12,ivory);handRow(dealer,320,51,i=>!exposed&&(h||i===1),t);
  if(h){for(let i=0;i<5;i++){ctx.strokeStyle="#92a07d";ctx.strokeRect(183+i*58,140,44,60)}board.forEach((c,i)=>handRow([c],205+i*58,140,()=>false,t));txt(stages[street],320,130,13,ivory)}
  else{txt("DEALER   "+(exposed?points(dealer):(dealer.length?points(dealer.slice(0,1))+" + ?":"…")),320,148,16,ivory);txt("PLAYER   "+points(player),320,193,17,ivory)}

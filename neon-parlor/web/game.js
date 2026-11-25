@@ -1,8 +1,8 @@
 const games=[
- ["LUCKY SEVEN","러키 세븐","REEL MACHINE",pink,"릴 3개가 순서대로 멈춥니다. 777은 30배, 다른 그림 세 개는 8배, 같은 그림 두 개는 1.5배입니다. 배수는 베팅액을 포함한 총 지급액입니다."],
- ["MONO ORBIT","모노 오빗","ORBIT WHEEL",ivory,"흑·백에 숫자 1~6이 각각 있습니다. 칩 단위와 칸을 골라 여러 번 추가하세요. 각 베팅에서 색+숫자는 2배, 색만 맞으면 1.5배, 나머지는 0입니다. 구슬이 멈춘 칸이 당첨입니다."],
- ["HARBOR HOLD’EM","하버 홀덤","HEADS-UP POKER",mint,"딜러와 같은 앤티를 냅니다. 각자 2장과 공용 5장 중 최고의 5장으로 겨룹니다. 프리플롭·플롭·턴·리버마다 먼저 체크하거나 앤티만큼 베팅하세요. 딜러도 체크·베팅·콜·폴드할 수 있습니다. 한 거리당 베팅은 한 번이며 레이즈는 없습니다. 무승부는 팟을 반씩 나눕니다."],
- ["BLUE HOUR 21","블루아워 21","BLACKJACK",blue,"A는 1 또는 11, 그림 카드는 10입니다. 딜러는 소프트 17을 포함해 17 이상에서 스탠드합니다. 처음 두 장의 블랙잭은 2.5배, 일반 승리는 2배, 무승부는 원금 반환입니다. 더블은 첫 두 장에서 베팅액을 두 배로 올리고 한 장만 받습니다."] ];
+ ["SLOTS","슬롯","SLOTS",pink,"릴 3개가 순서대로 멈춥니다. 777은 30배, 다른 그림 세 개는 8배, 같은 그림 두 개는 1.5배입니다. 배수는 베팅액을 포함한 총 지급액입니다."],
+ ["ROULETTE","룰렛","ROULETTE",ivory,"흑·백에 숫자 1~6이 각각 있습니다. 칩 단위와 칸을 골라 여러 번 추가하세요. 각 베팅에서 색+숫자는 2배, 색만 맞으면 1.5배, 나머지는 0입니다. 구슬이 멈춘 칸이 당첨입니다."],
+ ["HOLD’EM","홀덤","HOLD’EM",mint,"딜러와 같은 앤티를 냅니다. 각자 2장과 공용 5장 중 최고의 5장으로 겨룹니다. 프리플롭·플롭·턴·리버마다 먼저 체크하거나 앤티만큼 베팅하세요. 딜러도 체크·베팅·콜·폴드할 수 있습니다. 한 거리당 베팅은 한 번이며 레이즈는 없습니다. 무승부는 팟을 반씩 나눕니다."],
+ ["BLACKJACK","블랙잭","BLACKJACK",blue,"A는 1 또는 11, 그림 카드는 10입니다. 딜러는 소프트 17을 포함해 17 이상에서 스탠드합니다. 처음 두 장의 블랙잭은 2.5배, 일반 승리는 2배, 무승부는 원금 반환입니다. 더블은 첫 두 장에서 베팅액을 두 배로 올리고 한 장만 받습니다."] ];
 function read(k,d){try{return localStorage.getItem("neonPier1."+k)??d}catch{return d}}
 function save(k,v){try{localStorage.setItem("neonPier1."+k,v)}catch{}}
 let balance=Number(read("chips",1000));if(!Number.isFinite(balance)||balance<0)balance=1000;
@@ -41,7 +41,7 @@ function controls(){
  if(mode===3){btn("controls","히트",()=>black("hit"),"primary");btn("controls","스탠드",()=>black("stand"));btn("controls","더블",()=>black("double"),"",player.length!==2||balance<unit)}
 }
 async function start(){if(live||!spend(unit))return;live=true;busy=true;pot=unit;exposed=false;winUntil=0;sync();controls();
- if(mode===0){reels=[rnd(5),rnd(5),rnd(5)];anim={start:now()};say("릴이 회전합니다.");for(let i=0;i<3;i++){await wait(i?440:850);tone(330+i*130,.1,"square")}let mul=slotPay(reels);finish(unit*mul,reels.map(i=>symbolNames[i]).join(" · ")+" — "+(mul===30?"잭팟! 럭키 세븐":mul===8?"트리플 매치!":mul?"페어 적중":"매치 없음"));return}
+ if(mode===0){reels=[rnd(5),rnd(5),rnd(5)];anim={start:now()};say("릴이 회전합니다.");for(let i=0;i<3;i++){await wait(i?440:850);tone(330+i*130,.1,"square")}let mul=slotPay(reels);finish(unit*mul,reels.map(i=>symbolNames[i]).join(" · ")+" — "+(mul===30?"777 잭팟!":mul===8?"트리플 매치!":mul?"페어 적중":"매치 없음"));return}
  dealerContribution=unit;deck=freshDeck();player=[];dealer=[];board=[];street=0;pending=false;cardTimes.clear();say("딜러가 카드를 나눕니다.");
  for(let hand of [player,dealer,player,dealer]){deal(hand);await wait(160)}
  busy=false;

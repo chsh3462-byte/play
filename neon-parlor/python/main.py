@@ -1,4 +1,4 @@
-"""Run Neon Parlor offline with Python 3.8+. No packages required for browser mode."""
+"""Run MiniGames offline with Python 3.8+. No packages required for browser mode."""
 import os
 import sys
 import webbrowser
@@ -31,7 +31,7 @@ def main():
         temp.replace(page)
     if getattr(sys, "frozen", False):
         import webview
-        webview.create_window("Neon Parlor · 황동 살롱", page.as_uri(), width=1120, height=800,
+        webview.create_window("미니게임", page.as_uri(), width=1120, height=800,
                               min_size=(540, 560), background_color="#14271f", text_select=False)
         webview.start(gui="edgechromium", private_mode=False, storage_path=str(data / "profile"))
     else:
